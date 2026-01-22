@@ -22,8 +22,7 @@ It should work on all Minecraft versions supported by [Fabric](https://fabricmc.
 
 ## Recommended Usage
 
-For the best possible experience (instant server list population with immediate pings),
-use this mod together with [Fast IP Ping](https://github.com/Fallen-Breath/fast-ip-ping)
+For the best possible experience (instant server ping and connection), use this mod together with [Fast IP Ping](https://github.com/Fallen-Breath/fast-ip-ping)
 
 The combination eliminates both the blocked-servers fetch delay and the slow DNS resolution/ping phase,
 resulting in the server list refreshing and showing ping results almost instantly when you open the multiplayer menu

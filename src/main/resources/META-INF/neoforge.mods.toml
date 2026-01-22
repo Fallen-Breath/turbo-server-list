@@ -1,0 +1,18 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "LGPLv3"
+issueTrackerURL = "https://github.com/Fallen-Breath/turbo-server-list/issues"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+displayURL = "https://github.com/Fallen-Breath/turbo-server-list"
+authors = "Fallen_Breath"
+description = '''
+A simple fabric mod to that significantly decrease the server list first-load time by yeeting the blocked servers list fetching
+'''
+logoFile = "icon.png"
+
+[[mixins]]
+config = "${id}.mixins.json"

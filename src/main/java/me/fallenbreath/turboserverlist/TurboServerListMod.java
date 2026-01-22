@@ -20,16 +20,9 @@
 
 package me.fallenbreath.turboserverlist;
 
-import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-public class TurboServerListMod implements ModInitializer
+@net.minecraftforge.fml.common.Mod(TurboServerListMod.MOD_ID)
+@net.neoforged.fml.common.Mod(TurboServerListMod.MOD_ID)
+public class TurboServerListMod
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-
-	@Override
-	public void onInitialize()
-	{
-	}
+	public static final String MOD_ID = "turboserverlist";
 }

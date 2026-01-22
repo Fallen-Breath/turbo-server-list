@@ -13,20 +13,15 @@
     "sources": "https://github.com/Fallen-Breath/turbo-server-list"
   },
 
-  "icon": "assets/turboserverlist/icon.png",
+  "icon": "icon.png",
 
   "environment": "client",
-  "entrypoints": {
-    "main": [
-      "me.fallenbreath.turboserverlist.TurboServerListMod"
-    ]
-  },
   "mixins": [
     "turboserverlist.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.10.4",
-    "minecraft": "${minecraft_dependency}"
+    "minecraft": "*"
   }
 }
