@@ -4,29 +4,29 @@
   "version": "${version}",
 
   "name": "${name}",
-  "description": "Template for my fabric mods",
+  "description": "A simple fabric mod to that significantly decrease the server list first-load time by yeeting the blocked servers list fetching",
   "authors": [
     "Fallen_Breath"
   ],
   "contact": {
-    "homepage": "https://modrinth.com",
-    "sources": "https://github.com/Fallen-Breath/fabric-mod-template"
+    "homepage": "https://github.com/Fallen-Breath/turbo-server-list",
+    "sources": "https://github.com/Fallen-Breath/turbo-server-list"
   },
 
-  "icon": "assets/template_mod/icon.png",
+  "icon": "assets/turboserverlist/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      "me.fallenbreath.template_mod.TemplateMod"
+      "me.fallenbreath.turboserverlist.TurboServerListMod"
     ]
   },
   "mixins": [
-    "template_mod.mixins.json"
+    "turboserverlist.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.4",
+    "fabricloader": ">=0.10.4",
     "minecraft": "${minecraft_dependency}"
   }
 }

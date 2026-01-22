@@ -1,21 +1,41 @@
-## fabric-mod-template
+# Turbo Server List
 
-[![License](https://img.shields.io/github/license/Fallen-Breath/fabric-mod-template.svg)](http://www.gnu.org/licenses/lgpl-3.0.html)
-[![workflow](https://github.com/Fallen-Breath/fabric-mod-template/actions/workflows/gradle.yml/badge.svg)](https://github.com/Fallen-Breath/fabric-mod-template/actions/workflows/gradle.yml)
+A simple Fabric mod that significantly decreases the server list first-load time by skipping the blocked servers list fetching
 
-fallen's fabric mod template
+## How It Works
 
-If you find it helpful, a credit to this template in your project will be greatly appreciated
+In vanilla Minecraft, when you launch the game and open the multiplayer menu for the first time, the client cannot immediately start pinging or connecting to servers.
+Instead, it first fetches the blocked servers list from `https://sessionserver.mojang.com/blockedservers` to validate server addresses.
+Only after this request completes does Minecraft begin establishing connections.
 
-## To use
+Although the list is fetched only once per game launch, players who have poor connectivity to Mojang's servers may experience delays 
+of seconds or even minutes while waiting for the blocked list to load
 
-1. Clone / Use this template to get a new project
-2. Search `[FEATURE]` in the project, delete or uncomment those addons
-3. Setup the mod
-    - Edit java package name
-    - Edit [gradle.properties](gradle.properties) for mod id / name etc.
-    - Edit mod name in [bug_report.yml](.github/ISSUE_TEMPLATE/bug_report.yml)
-    - Edit [common.gradle](common.gradle) for mod file location constants
-    - Change the Minecraft versions in [settings.json](settings.json), [build.gradle](build.gradle), and files in the [versions](versions) folder
-    - Search `template` in the project to see if there are any missing unedited stuffs
-4. Edit [README](README.md) for the new mod
+This mod's implementation is straightforward: it simply eliminates the blocked servers list fetch,
+allowing the multiplayer menu to open instantly with smooth server list refreshing and lightning-fast pings/joins
+
+## Requirements
+
+It's a client-side-only mod that only requires fabric loader >= 0.10.4. No other dependencies are needed
+
+It should work on all Minecraft versions supported by [Fabric](https://fabricmc.net/)
+
+## Recommended Usage
+
+For the best possible experience (instant server list population with immediate pings),
+use this mod together with [Fast IP Ping](https://github.com/Fallen-Breath/fast-ip-ping)
+
+The combination eliminates both the blocked-servers fetch delay and the slow DNS resolution/ping phase,
+resulting in the server list refreshing and showing ping results almost instantly when you open the multiplayer menu
+
+## ⚠️ Disclaimer
+
+This mod is not designed for accessing servers in the blocked list. 
+If you connect to a Mojang-blocked server via this mod, you assume full responsibility for any possible EULA/Usage Guidelines violations
+
+Always review: 
+
+- [Minecraft EULA](https://www.minecraft.net/en-us/eula)
+- [Minecraft Usage Guidelines](https://www.minecraft.net/en-us/usage-guidelines)
+
+Provided "as-is" without warranties

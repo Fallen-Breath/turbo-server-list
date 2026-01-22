@@ -47,48 +47,11 @@ dependencies {
 		}
 	}
 	autoImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// runtime mods
-//	if (mcVersion < 11904) {
-//		autoRuntimeOnly(mcVersion < 11900 ? "com.github.astei:lazydfu:0.1.2" : "com.github.Fallen-Breath:lazydfu:a7cfc44c0c")
-//	}
-//	// [FEATURE] MIXIN_AUDITOR
-//	autoRuntimeOnly "me.fallenbreath:mixin-auditor:0.2.0-${unobfuscated ? 'u' : 'o'}"
-
-	// dependencies
-//	def fabricApiModules = []
-//	if (mcVersion >= 12105) {  // "fabric-resource-loader-v0" dependency since fabric api 0.117.0 (25w07a, mc1.21.5 snapshot)
-//		fabricApiModules.add("fabric-api-base")
-//	}
-//	if (mcVersion < 12111) {  // "fabric-resource-loader" is fully moved from v0 to v1 since fabric api 0.139.3 (1.21.11-pre4)
-//		fabricApiModules.add("fabric-resource-loader-v0")
-//	}
-//	if (mcVersion >= 12109) {  // "fabric-resource-loader-v0" dependency since fabric api 0.133.11 (1.21.9-rc1)
-//		fabricApiModules.add("fabric-resource-loader-v1")
-//	}
-//	fabricApiModules.forEach {
-//		include(autoImplementation(fabricApi.module(it, project.fabric_api_version)))
-//	}
-//	include(autoImplementation("me.fallenbreath:conditional-mixin-fabric:${project.conditionalmixin_version}"))
-//	if (mcVersion < 12005) {
-//		include("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")
-//	}
 }
 
-String MIXIN_CONFIG_PATH = 'template_mod.mixins.json'
-String LANG_DIR = 'assets/template_mod/lang'
-JavaVersion JAVA_COMPATIBILITY
-if (mcVersion >= 260000) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_25
-} else if (mcVersion >= 12005) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
-} else if (mcVersion >= 11800) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_17
-} else if (mcVersion >= 11700) {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_16
-} else {
-	JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
-}
+String MIXIN_CONFIG_PATH = 'turboserverlist.mixins.json'
+String LANG_DIR = 'assets/turboserverlist/lang'
+JavaVersion JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
 JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_COMPATIBILITY
 
 loom {
@@ -99,20 +62,6 @@ loom {
 		runDir '../../run'
 		vmArgs commonVmArgs
 	}
-//	// [FEATURE] MIXIN_AUDITOR
-//	runs {
-//		def auditVmArgs = [*commonVmArgs, '-DmixinAuditor.audit=true']
-//		serverMixinAudit {
-//			server()
-//			vmArgs auditVmArgs
-//			ideConfigGenerated false
-//		}
-//		clientMixinAudit {
-//			client()
-//			vmArgs auditVmArgs
-//			ideConfigGenerated false
-//		}
-//	}
 }
 
 String modVersionSuffix = ''
@@ -133,20 +82,13 @@ String fullProjectVersion, fullArtifactVersion
 //   modVersionSuffix        +build.88                  (use github action build number if possible)
 //   artifactVersionSuffix   -SNAPSHOT
 //   fullModVersion          1.0.3+build.88             (the actual mod version to use in the mod)
-//   fullProjectVersion      v1.0.3-mc1.15.2+build.88   (in build output jar name)
-//   fullArtifactVersion     1.0.3-mc1.15.2-SNAPSHOT    (maven artifact version)
+//   fullProjectVersion      v1.0.3+build.88            (in build output jar name)
+//   fullArtifactVersion     1.0.3-SNAPSHOT             (maven artifact version)
 
 group = project.maven_group
-if (System.getenv("JITPACK") == "true") {
-	// move mc version into archivesBaseName, so jitpack will be able to organize archives from multiple subprojects correctly
-	base.archivesName = project.archives_base_name + '-mc' + project.minecraft_version
-	fullProjectVersion = 'v' + project.mod_version + modVersionSuffix
-	fullArtifactVersion = artifactVersion + artifactVersionSuffix
-} else {
-	base.archivesName = project.archives_base_name
-	fullProjectVersion = 'v' + project.mod_version + '-mc' + project.minecraft_version + modVersionSuffix
-	fullArtifactVersion = artifactVersion + '-mc' + project.minecraft_version + artifactVersionSuffix
-}
+base.archivesName = project.archives_base_name
+fullProjectVersion = 'v' + project.mod_version + modVersionSuffix
+fullArtifactVersion = artifactVersion + artifactVersionSuffix
 version = fullProjectVersion
 
 // See https://youtrack.jetbrains.com/issue/IDEA-296490
@@ -251,18 +193,5 @@ publishing {
 
 	// select the repositories you want to publish to
 	repositories {
-		// mavenLocal()
-
-//		// [FEATURE] FALLENS_MAVEN
-//		maven {
-//			url = fullArtifactVersion.endsWith("SNAPSHOT") ? "https://maven.fallenbreath.me/snapshots" : "https://maven.fallenbreath.me/releases"
-//			credentials(PasswordCredentials) {
-//				username = 'fallen'
-//				password = System.getenv("FALLENS_MAVEN_TOKEN")
-//			}
-//			authentication {
-//				basic(BasicAuthentication)
-//			}
-//		}
 	}
 }
