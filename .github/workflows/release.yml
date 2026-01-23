@@ -105,7 +105,7 @@ jobs:
         id: file_info
         run: |
           shopt -s extglob
-          FILE_PATHS=$(ls build-artifacts/build/libs/!(*-@(dev|sources|shadow)).jar)
+          FILE_PATHS=$(ls build-artifacts/!(*-@(dev|sources|shadow)).jar)
           if (( ${#FILE_PATHS[@]} != 1 )); then
               echo "Error: Found ${#FILE_PATHS[@]} files, expected exactly 1"
               exit 1
