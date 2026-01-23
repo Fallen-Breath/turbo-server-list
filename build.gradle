@@ -34,7 +34,6 @@ dependencies {
 }
 
 String MIXIN_CONFIG_PATH = 'turboserverlist.mixins.json'
-String LANG_DIR = 'assets/turboserverlist/lang'
 JavaVersion JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
 JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_COMPATIBILITY
 
@@ -43,7 +42,7 @@ loom {
 	runConfigs.configureEach {
 		// to make sure it generates all "Minecraft Client (:subproject_name)" applications
 		ideConfigGenerated = true
-		runDir '../../run'
+		runDir 'run'
 		vmArgs commonVmArgs
 	}
 }
@@ -128,7 +127,7 @@ jar {
 	}
 
 	manifest {
-		attributes(MixinConfigs: 'turboserverlist.mixins.json')  // forge needs this
+		attributes(MixinConfigs: MIXIN_CONFIG_PATH)  // forge needs this
 	}
 }
 

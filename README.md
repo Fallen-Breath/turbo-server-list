@@ -6,7 +6,7 @@ A simple Fabric mod that significantly decreases the server list first-load time
 
 In vanilla Minecraft, when you launch the game and open the multiplayer menu for the first time, the client cannot immediately start pinging or connecting to servers.
 Instead, it first fetches the blocked servers list from `https://sessionserver.mojang.com/blockedservers` to validate server addresses.
-Only after this request completes does Minecraft begin establishing connections.
+Only after this request completes does Minecraft begin establishing connections
 
 Although the list is fetched only once per game launch, players who have poor connectivity to Mojang's servers may experience delays 
 of seconds or even minutes while waiting for the blocked list to load
@@ -16,9 +16,11 @@ allowing the multiplayer menu to open instantly with smooth server list refreshi
 
 ## Requirements
 
-It's a client-side-only mod that only requires fabric loader >= 0.10.4. No other dependencies are needed
+It's a client-side-only **fabric** mod that only requires fabric loader >= [0.14.0](https://github.com/FabricMC/fabric-loader/releases/tag/0.14.0). No other dependencies are needed
 
 It should work on all Minecraft versions supported by [Fabric](https://fabricmc.net/)
+
+There was an attempt to make it support forge / neoforge as well, but it seems like they don't support applying mixin on third-party libraries yet, so it doesn't work
 
 ## Recommended Usage
 
