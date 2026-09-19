@@ -29,8 +29,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// forge mimic
-	compileOnly("org.apache.maven:maven-artifact:3.9.12")
-	compileOnly project(":stubs")
+	compileOnly 'org.apache.maven:maven-artifact:3.9.12'
+	compileOnly 'me.fallenbreath:blacksmith-stubs:0.1.0'
 }
 
 String MIXIN_CONFIG_PATH = 'turboserverlist.mixins.json'
