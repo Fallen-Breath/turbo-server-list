@@ -8,7 +8,7 @@ In vanilla Minecraft, when you launch the game and open the multiplayer menu for
 Instead, it first fetches the blocked servers list from `https://sessionserver.mojang.com/blockedservers` to validate server addresses.
 Only after this request completes does Minecraft begin establishing connections
 
-Although the list is fetched only once per game launch, players who have poor connectivity to Mojang's servers may experience delays 
+Although the list is fetched only once per game launch, players who have poor connectivity to Mojang's servers may experience delays [AddressCheck.class](../../../../Minecraft/MultiMC/instances/1.21%20neoforge/.minecraft/.mixin.out/class/net/minecraft/client/multiplayer/resolver/AddressCheck.class)
 of seconds or even minutes while waiting for the blocked list to load
 
 This mod's implementation is straightforward: it simply eliminates the blocked servers list fetch,
@@ -16,11 +16,17 @@ allowing the multiplayer menu to open instantly with smooth server list refreshi
 
 ## Requirements
 
-It's a client-side-only **fabric** mod that only requires fabric loader >= [0.14.0](https://github.com/FabricMC/fabric-loader/releases/tag/0.14.0). No other dependencies are needed
+It's a client-side-only mod that requires no extra dependencies, supporting Fabric / Forge / NeoForge mod loaders in a single `.jar` file.
 
-It should work on all Minecraft versions supported by [Fabric](https://fabricmc.net/)
+| Platform | Supported MC Versions | Mod Loader Requirement                                                                                                                            |
+| -------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fabric   | All versions          | Requires Fabric Loader >= [0.14.0](https://github.com/FabricMC/fabric-loader/releases/tag/0.14.0)                                                 |
+| Forge    | >= 1.21               | Requires Forge >= [51.0.23](https://maven.minecraftforge.net/net/minecraftforge/forge/1.21-51.0.23/forge-1.21-51.0.23-changelog.txt)              |
+| NeoForge | >= 1.21               | Requires NeoForge >= [21.0.57-beta](https://maven.neoforged.net/releases/net/neoforged/neoforge/21.0.60-beta/neoforge-21.0.60-beta-changelog.txt) |
 
-There was an attempt to make it support forge / neoforge as well, but it seems like they don't support applying mixin on third-party libraries yet, so it doesn't work
+There was an attempt to support more Minecraft versions on Forge / NeoForge,
+but it is blocked by the fact that these mod loaders either do not support applying Mixins to third-party libraries,
+or bundle an older Mixin version (< 0.8.6) that does not support interface mixins well enough
 
 ## Recommended Usage
 

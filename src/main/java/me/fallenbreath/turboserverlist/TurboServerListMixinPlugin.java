@@ -79,11 +79,15 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 	{
 		if (mixinClassName.endsWith(".MojangBlockListSupplierMixin"))
 		{
-			return this.modifyMode == ModifyMode.SUPPLIER_SERVICE;
+			return this.modifyMode == ModifyMode.SUPPLIER_SERVICE_LIB;
 		}
 		if (mixinClassName.endsWith(".BlockedServersMixin"))
 		{
 			return this.modifyMode == ModifyMode.BLOCKED_SERVERS_CLINIT;
+		}
+		if (mixinClassName.endsWith(".AddressCheckMixin"))
+		{
+			return this.modifyMode == ModifyMode.SUPPLIER_SERVICE_CALLER;  // requires unobfuscated minecraft
 		}
 		LOGGER.warn("Unexpected Mixin class {}", mixinClassName);
 		return false;
@@ -125,7 +129,10 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 
 	private enum ModifyMode
 	{
-		UNSET, BLOCKED_SERVERS_CLINIT, SUPPLIER_SERVICE
+		UNSET,
+		BLOCKED_SERVERS_CLINIT,
+		SUPPLIER_SERVICE_LIB,
+		SUPPLIER_SERVICE_CALLER,  // for forgelike platforms that does not support mixin into library yet
 	}
 
 	private interface ModeChecker
@@ -142,7 +149,7 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 					orElseThrow(() -> new RuntimeException("Failed to get minecraft mod container"));
 			Version mcVersion = mc.getMetadata().getVersion();
 			ModifyMode modifyMode = doesVersionSatisfyPredicateImpl(mcVersion, ">=1.17.0-alpha.21.19.a")
-					? ModifyMode.SUPPLIER_SERVICE
+					? ModifyMode.SUPPLIER_SERVICE_LIB
 					: ModifyMode.BLOCKED_SERVERS_CLINIT;
 			LOGGER.info("Turbo Server List: fabric, mc version: {}, modify mode: {}", mcVersion.getFriendlyString(), modifyMode);
 			return modifyMode;
@@ -190,6 +197,7 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 
 		protected abstract List<McVersionSupplier> createMcVersionSuppliers();
 		protected abstract String platformName();
+		protected abstract String runtimeMojmapVersionSpec();
 
 		@Override
 		public ModifyMode check()
@@ -218,9 +226,11 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 			try
 			{
 				ArtifactVersion mcVersion = new DefaultArtifactVersion(mcVersionString);
-				ModifyMode modifyMode = VersionRange.createFromVersionSpec("[1.17, )").containsVersion(mcVersion)
-						? ModifyMode.SUPPLIER_SERVICE
-						: ModifyMode.BLOCKED_SERVERS_CLINIT;
+				boolean is17Plus = VersionRange.createFromVersionSpec("[1.17, )").containsVersion(mcVersion);
+				boolean isMojmap = VersionRange.createFromVersionSpec(runtimeMojmapVersionSpec()).containsVersion(mcVersion);
+				ModifyMode modifyMode = is17Plus && isMojmap
+						? ModifyMode.SUPPLIER_SERVICE_CALLER
+						: is17Plus ? ModifyMode.SUPPLIER_SERVICE_LIB : ModifyMode.BLOCKED_SERVERS_CLINIT;
 				LOGGER.info("Turbo Server List: {}, mc version: {}, modify mode: {}", this.platformName(), mcVersion, modifyMode);
 				return modifyMode;
 			}
@@ -237,6 +247,12 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 		protected String platformName()
 		{
 			return "forge";
+		}
+
+		@Override
+		protected String runtimeMojmapVersionSpec()
+		{
+			return "[1.20.6, )";
 		}
 
 		@Override
@@ -278,6 +294,12 @@ public class TurboServerListMixinPlugin implements IMixinConfigPlugin
 		protected String platformName()
 		{
 			return "neoforge";
+		}
+
+		@Override
+		protected String runtimeMojmapVersionSpec()
+		{
+			return "[1.20.2, )";
 		}
 
 		@Override
