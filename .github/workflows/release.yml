@@ -147,7 +147,7 @@ jobs:
           files: ${{ steps.file_info.outputs.path }}
 
           name: ${{ format('{0} v{1}', steps.properties_g.outputs.mod_name, steps.properties_g.outputs.mod_version) }}
-          version: ${{ format('v{1}', steps.properties_g.outputs.mod_version) }}
+          version: ${{ format('v{0}', steps.properties_g.outputs.mod_version) }}
           version-type: release
 
           loaders: fabric
